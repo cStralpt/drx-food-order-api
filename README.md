@@ -43,6 +43,7 @@ Then run these commands to set up the database:
 
 ```sql
 CREATE ROLE "drx-test" WITH LOGIN PASSWORD 'drx-test-123';
+ALTER ROLE "drx-test" CREATEDB;
 CREATE DATABASE drx_order;
 GRANT ALL PRIVILEGES ON DATABASE drx_order TO "drx-test";
 ALTER DATABASE drx_order OWNER TO "drx-test";
