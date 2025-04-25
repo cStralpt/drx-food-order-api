@@ -64,6 +64,16 @@ pnpm dlx prisma generate
 
 This will create the type-safe client in the `generated/prisma` directory.
 
+## Database Administration
+
+To view and manage your database with a GUI, you can use Prisma Studio:
+
+```bash
+pnpm dlx prisma studio
+```
+
+This will open a browser interface at http://localhost:5555 where you can browse and modify your database tables.
+
 ## Compile and run the project
 
 ```bash
