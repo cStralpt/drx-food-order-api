@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto';
 import { OrderStatus } from './entities/order-status.enum';
@@ -78,8 +78,11 @@ export class OrderService {
     return this.generateInvoice(order);
   }
 
-  async findAll() {
+  async findAll(userId?: string) {
+    const where = userId ? { userId } : {};
+    
     const orders = await this.prisma.order.findMany({
+      where,
       include: {
         user: {
           select: {
@@ -99,7 +102,7 @@ export class OrderService {
     return orders.map(order => this.generateInvoice(order));
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, userId?: string) {
     const order = await this.prisma.order.findUnique({
       where: { id },
       include: {
@@ -120,6 +123,10 @@ export class OrderService {
 
     if (!order) {
       throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+
+    if (userId && order.userId !== userId) {
+      throw new ForbiddenException('You do not have permission to access this order');
     }
 
     return this.generateInvoice(order);
