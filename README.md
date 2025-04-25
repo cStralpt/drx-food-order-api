@@ -52,6 +52,18 @@ GRANT ALL ON SCHEMA public TO "drx-test";
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO "drx-test";
 ```
 
+DATABASE_URL=postgresql://drx-test:drx-test-123@localhost:5432/drx_order
+
+## Generate Prisma Client
+
+After setting up the database, generate the Prisma client with:
+
+```bash
+pnpm dlx prisma generate
+```
+
+This will create the type-safe client in the `generated/prisma` directory.
+
 ## Compile and run the project
 
 ```bash
