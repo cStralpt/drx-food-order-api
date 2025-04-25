@@ -31,6 +31,26 @@
 $ pnpm install
 ```
 
+## Database setup
+
+First, connect to PostgreSQL:
+
+```bash
+psql -U postgres
+```
+
+Then run these commands to set up the database:
+
+```sql
+CREATE ROLE "drx-test" WITH LOGIN PASSWORD 'drx-test-123';
+CREATE DATABASE drx_order;
+GRANT ALL PRIVILEGES ON DATABASE drx_order TO "drx-test";
+ALTER DATABASE drx_order OWNER TO "drx-test";
+\c drx_order
+GRANT ALL ON SCHEMA public TO "drx-test";
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO "drx-test";
+```
+
 ## Compile and run the project
 
 ```bash
